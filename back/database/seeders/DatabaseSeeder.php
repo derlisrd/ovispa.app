@@ -19,13 +19,17 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'email'=>'derlisruizdiaz@hotmail.com',
             'username'=>'derlis',
-            'password'=>Hash::make('decano'),
+            'password'=>Hash::make(env('CLAVE_USER')),
             'name'=>'Derlis',
-            'active'=>1
+            'rol'=>5,
+            'active'=>1,
+            'appversion'=>1
         ]);
-        DB::table('clientes')->insert([
-            'doc'=>'x',
-            'nombre'=>'Sin nombre'
+
+        DB::table('versiones')->insert([
+            'name'=>'Ovispa',
+            'link'=>'http',
+            'version'=>1
         ]);
     }
 }

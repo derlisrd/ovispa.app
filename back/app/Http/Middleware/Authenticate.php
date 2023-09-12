@@ -16,10 +16,8 @@ class Authenticate extends Middleware
     {
         if (! $request->expectsJson()) {
             return response()->json([
-                'response'=>false,
-                'error'=>true,
-                'message'=>'No autenticated',
-                'results'=>null
+                'success'=>false,
+                'message'=>'No autenticated'
             ]);
             //return route('login');
         }

@@ -18,7 +18,8 @@ class CreateMovimientosTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->text('detalles')->nullable();
-            $table->boolean('tipo')->comment('1 entrada 0 salida');
+            $table->boolean('modo')->comment('1 entrada 0 salida');
+            $table->boolean('tipo')->default(1)->comment('1 efectivo 0 digital');
             $table->double('valor',20);
             $table->timestamps();
             $table->softDeletes();

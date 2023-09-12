@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Movimiento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class MovimientoController extends Controller
 {
@@ -13,9 +16,21 @@ class MovimientoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Movimiento::all();
+
+
+        $userId = Auth::id();
+        $fechaInicio = $request->input('fecha_inicio', date('Y-m-01'));
+        $fechaFin = $request->input('fecha_fin', date('Y-m-t'));
+
+        $mov = Movimiento::where('user_id', $userId)
+        ->whereBetween('created_at', [$fechaInicio, $fechaFin])
+        ->get();
+        return response()->json([
+            'success'=>true,
+            'results'=> $mov
+        ]);
     }
 
     /**
@@ -26,7 +41,19 @@ class MovimientoController extends Controller
      */
     public function show($id)
     {
-        return Movimiento::find($id);
+        $userId = Auth::id();
+        $mov = Movimiento::where('user_id', $userId)->where('id',$id)->first();
+        if($mov){
+
+            return response()->json([
+                'success'=>true,
+                'results'=> $mov
+            ]);
+        }
+        return response()->json([
+            'success'=>false,
+        ],404);
+
     }
 
     /**
@@ -37,25 +64,49 @@ class MovimientoController extends Controller
      */
     public function store(Request $request)
     {
-        $user = $request->user;
+        $userId = Auth::id();
         $validator = Validator::make($request->all(), [
-            'detalles' => 'required|string|min:5',
-            'tipo' => 'required|string|max:2',
-            'valor' => 'required|numeric',
+            'detalles' => 'required|string|max:255', // Detalles es una cadena de texto de máximo 255 caracteres.
+            'tipo' => [
+                'required',
+                Rule::in([0, 1]) // Tipo debe ser 0 o 1.
+            ],
+            'modo' => [
+                'required',
+                Rule::in([0, 1]) // Modo debe ser 0 o 1.
+            ],
+            'valor' => 'required|numeric', // Valor debe ser un número.
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return response()->json([
+                'success'=>false,
+                'message'=> $validator->errors()
+            ], 422);
         }
 
-        $movimiento = new Movimiento();
-        $movimiento->user_id = $user->id;
-        $movimiento->detalles = $request->input('detalles');
-        $movimiento->tipo = $request->input('tipo');
-        $movimiento->valor = $request->input('valor');
-        $movimiento->save();
+        try {
+            $mov = Movimiento::create([
+                'detalles'=>$request->detalles,
+                'valor'=>$request->valor,
+                'modo'=>$request->modo,
+                'user_id'=>$userId
+            ]);
+            return response()->json([
+                'success'=>true,
+                'results'=>$mov
+            ]);
 
-        return $movimiento;
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json([
+                'success'=>true,
+                'message'=>'Server error'
+            ],500);
+            Log::debug($th);
+        }
+
+
     }
 
     /**
@@ -67,14 +118,51 @@ class MovimientoController extends Controller
      */
     public function update($id, Request $request)
     {
-        $movimiento = Movimiento::find($id);
-        $movimiento->user_id = $request->input('user_id');
-        $movimiento->detalles = $request->input('detalles');
-        $movimiento->tipo = $request->input('tipo');
-        $movimiento->valor = $request->input('valor');
-        $movimiento->save();
+        $validator = Validator::make($request->all(), [
+            'detalles' => 'required|string|max:255', // Detalles es una cadena de texto de máximo 255 caracteres.
+            'tipo' => [
+                'required',
+                Rule::in([0, 1]) // Tipo debe ser 0 o 1.
+            ],
+            'modo' => [
+                'required',
+                Rule::in([0, 1]) // Modo debe ser 0 o 1.
+            ],
+            'valor' => 'required|numeric', // Valor debe ser un número.
+        ]);
 
-        return $movimiento;
+        if ($validator->fails()) {
+            return response()->json([
+                'success'=>false,
+                'message'=> $validator->errors()
+            ], 422);
+        }
+        $mov = Movimiento::findOrFail($id);
+
+        // Actualizar los campos del movimiento con los nuevos valores proporcionados en la solicitud.
+
+
+        try {
+            $mov->update([
+                'detalles' => $request->input('detalles'),
+                'tipo' => $request->input('tipo'),
+                'modo' => $request->input('modo'),
+                'valor' => $request->input('valor'),
+            ]);
+            return response()->json([
+                'success'=>true,
+                'results'=>$mov
+            ]);
+
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json([
+                'success'=>true,
+                'message'=>'Server error'
+            ],500);
+            Log::debug($th);
+        }
+
     }
 
     /**

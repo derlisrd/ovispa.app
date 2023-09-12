@@ -36,10 +36,8 @@ class Handler extends ExceptionHandler
     $this->renderable(function (AuthenticationException $e, $request) {
 
             return response()->json([
-            'response'=>false,
-            'error'=>true,
-            'message' => 'Unauthenticated.',
-            'results'=>null
+            'success'=>false,
+            'message' => 'Unauthenticated.'
             ]);
 
     });

@@ -10,4 +10,7 @@ class Movimiento extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    protected $table = 'movimientos';
+    protected $fillable = ['user_id','detalles','tipo','valor','modo'];
+    protected $hidden = [ 'updated_at', 'deleted_at','user_id'];
 }
