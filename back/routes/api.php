@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\MetodosController;
 use App\Http\Controllers\MovimientoController;
 use Illuminate\Support\Facades\Route;
+
+Route::post('/auth/login',[AuthController::class,'login'])->name('auth.login');
+Route::post('/auth/register',[AuthController::class,'register'])->name('auth.register');
 
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/auth/check',[AuthController::class,'check'])->name('auth.check');
@@ -17,8 +19,6 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::delete('/movimientos/{id}',[MovimientoController::class,'destroy'])->name('movimiento.destroy');
 });
 
-Route::get('/auth/check',[MetodosController::class,'not_found']);
-Route::get('/auth/login',[MetodosController::class,'not_found']);
 
-Route::post('/auth/login',[AuthController::class,'login'])->name('auth.login');
-Route::post('/auth/register',[AuthController::class,'register'])->name('auth.register');
+
+
