@@ -19,13 +19,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return  Scaffold(
       appBar: AppBar(),
       body:  SafeArea(
-        child: SafeArea(child: 
+        child: SingleChildScrollView(child: 
         Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              const Icon(Icons.wallet, size: 48,),
               const MontseText(texto: 'Registro',style: TextStyle(fontSize: 44, fontWeight: FontWeight.bold)),
+              const MontseText(texto: 'Usa tus datos para registrarte',style: TextStyle(fontSize: 14)),
+              const SizedBox(height: 20,),
               InputText(controller: nameController , hintText: "Nombre"),
               InputText(controller: emailController , hintText: "Email"),
               InputText(controller: passController , hintText: "Contraseña",obscureText: true,),

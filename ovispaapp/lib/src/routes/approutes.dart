@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ovispaapp/src/screens/home/homescreen.dart';
 import '../screens/screens.dart';
 
 class AppRoutes {
@@ -7,7 +8,8 @@ class AppRoutes {
 
     return {
       LoginScreen.routeName :(context) => const LoginScreen(),
-      '/register':(context) => const RegisterScreen(),
+      RegisterScreen.routeName:(context) => const RegisterScreen(),
+      HomeScreen.routeName:(context) => const HomeScreen()
     };
   }  
 }
