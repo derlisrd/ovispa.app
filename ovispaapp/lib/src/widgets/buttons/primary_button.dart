@@ -3,7 +3,8 @@ import 'package:ovispaapp/src/widgets/Fonts/montsetext.dart';
 
 class PrimaryButton extends StatelessWidget {
   final String text;
-  const PrimaryButton({super.key,required this.text});
+  final Function()? onTap;
+  const PrimaryButton({super.key,required this.text, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,7 @@ class PrimaryButton extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8,horizontal: 24),
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: onTap,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.black87,
           padding: const EdgeInsets.symmetric(horizontal: 32,vertical: 22),

@@ -28,7 +28,7 @@ class InputText extends StatelessWidget {
         ]
       ),
       padding: const EdgeInsets.symmetric(horizontal: 24),
-      margin: const EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsets.symmetric(vertical: 4),
       child: TextField(
         autofocus: autoFocus,
         controller: controller,

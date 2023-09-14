@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ovispaapp/src/screens/auth/register_screen.dart';
-import 'package:ovispaapp/src/widgets/Fonts/montsetext.dart';
-import 'package:ovispaapp/src/widgets/buttons/primary_button.dart';
-import 'package:ovispaapp/src/widgets/buttons/secondary_button.dart';
-import 'package:ovispaapp/src/widgets/textfields/inputtext.dart';
+import 'package:ovispaapp/src/widgets/widgets.dart';
 
 class LoginScreen extends StatefulWidget {
 
@@ -34,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
               InputText(controller: emailController, hintText: 'Email'),
               InputText(controller: passController, hintText: 'Contraseña', obscureText: true,),
               const SizedBox(height: 20,),
-              const PrimaryButton(text: "Ingresar",),
+               PrimaryButton(text: "Ingresar", onTap: (){},),
                SecondaryButton(text: "Registrarme", onTap: () {
                 Navigator.pushNamed(context,RegisterScreen.routeName);
               },)
