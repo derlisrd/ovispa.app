@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:ovispaapp/src/screens/auth/register_screen.dart';
 import 'package:ovispaapp/src/widgets/Fonts/montsetext.dart';
 import 'package:ovispaapp/src/widgets/buttons/primary_button.dart';
+import 'package:ovispaapp/src/widgets/buttons/secondary_button.dart';
 import 'package:ovispaapp/src/widgets/textfields/inputtext.dart';
 
 class LoginScreen extends StatefulWidget {
 
-
+  static const String routeName = '/login';
   const LoginScreen({super.key});
 
   @override
@@ -25,10 +27,17 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-             const MontseText(texto: 'Bienvenid@ !',style: TextStyle(fontSize: 24)),
+              const Icon(Icons.wallet, size: 48,),
+             const MontseText(texto: 'HOLA!',style: TextStyle(fontSize: 44, fontWeight: FontWeight.bold)),
+             const MontseText(texto: 'Bienvenido de nuevo!',style: TextStyle(fontSize: 14)),
+              const SizedBox(height: 30,),
               InputText(controller: emailController, hintText: 'Email'),
               InputText(controller: passController, hintText: 'Contraseña', obscureText: true,),
-              const PrimaryButton()
+              const SizedBox(height: 20,),
+              const PrimaryButton(text: "Ingresar",),
+               SecondaryButton(text: "Registrarme", onTap: () {
+                Navigator.pushNamed(context,RegisterScreen.routeName);
+              },)
             ],
           ),
         )

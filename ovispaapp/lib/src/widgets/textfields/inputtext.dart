@@ -18,7 +18,8 @@ class InputText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final primaryColor = Theme.of(context).primaryColor;
+    //final primaryColor = Theme.of(context).primaryColor;
+    const primaryColor = Colors.grey;
 
     return Container(
       decoration: const BoxDecoration(
@@ -41,7 +42,7 @@ class InputText extends StatelessWidget {
           fillColor: Colors.grey.shade100,
           enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.white)),
-          focusedBorder:  OutlineInputBorder(
+          focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: primaryColor)),
         ),
       ),
