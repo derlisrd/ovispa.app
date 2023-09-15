@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:ovispaapp/src/providers/authprovider.dart';
 import 'package:ovispaapp/src/routes/approutes.dart';
+import 'package:provider/provider.dart';
 
+void main()=>runApp(const AppState());
 
-void main() {
-  runApp(const MyApp());
+class AppState extends StatelessWidget{
+  const AppState({super.key});
+  @override
+  Widget build(BuildContext context){
+    return MultiProvider(
+      providers: [
+      ChangeNotifierProvider(create: (context)=> AuthProvider())
+    ],
+     child:const MyApp(),
+    );
+  }
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
