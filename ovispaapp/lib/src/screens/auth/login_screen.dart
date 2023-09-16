@@ -3,8 +3,6 @@ import 'package:ovispaapp/src/screens/home/homescreen.dart';
 import 'package:provider/provider.dart';
 import 'package:ovispaapp/src/providers/authprovider.dart';
 import 'package:ovispaapp/src/screens/auth/register_screen.dart';
-//import 'package:ovispaapp/src/screens/home/homescreen.dart';
-import 'package:ovispaapp/src/services/apicaller.dart';
 import 'package:ovispaapp/src/widgets/widgets.dart';
 
 class LoginScreen extends StatefulWidget {
