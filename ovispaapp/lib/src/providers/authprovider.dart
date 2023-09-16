@@ -1,27 +1,53 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:ovispaapp/src/models/login_response.dart';
-import 'package:ovispaapp/src/services/apicaller.dart';
+import 'package:ovispaapp/src/models/user.dart';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class AuthProvider extends ChangeNotifier {
   bool _isAuth = true;
+  User? _user;
 
+  User? get user => _user;
   bool get isAuth => _isAuth;
 
-   Future<dynamic> login(String email,String pass) async{
-    final LoginResponse response = await ApiCaller().login(email,pass);
-    if(response.success){
-
-    _isAuth = true;
-    notifyListeners();
+  final dio = Dio(BaseOptions(baseUrl: 'http://127.0.0.1:8000'));
+  
+  Future<void> login(String email,String pass) async{
+    try {
+      final response = await dio.post('/auth/login',data: {"email":email,"password":pass});
+      final data = response.data;
+      if(data['success'] == true && response.statusCode == 200){
+        final SharedPreferences local = await SharedPreferences.getInstance();
+        local.setString('token',response.data['results']['token']);
+        _user = User(email: data['results']['email'], id: data['results']['id'], token: data['results']['token']);
+        _isAuth = true;
+        notifyListeners();
+      }else{
+        throw Exception('Credenciales incorrectas');
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
+  Future<void> checkAuthStatus()async{
+    final local = await SharedPreferences.getInstance();
+    final token = local.getString('token');
+    if(token != null){
+      _isAuth = true;
+      notifyListeners();
+    }
+  }
 
-
-  void logout() {
-    // Aquí implementa la lógica de cierre de sesión.
+  Future<void> logout() async{
+    final SharedPreferences local = await SharedPreferences.getInstance();
+    local.remove('token');
     _isAuth = false;
     notifyListeners();
   }
+
+
+  
 }
