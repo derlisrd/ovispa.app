@@ -24,13 +24,17 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
   final authProvider = Provider.of<AuthProvider>(context);
 
-  trylogin(){
-    authProvider.login(emailController.text, passController.text);
+  Future<void> trylogin() async{
+    await authProvider.login(emailController.text, passController.text);
+    if (authProvider.isAuth){
+      print(authProvider.user);
+      /* Navigator.pushReplacement(context, 
+        MaterialPageRoute(builder: (context) => HomeScreen(),)
+      ); */
+    }
   }
 
-  if (authProvider.isAuth) {
-      Navigator.pushReplacementNamed(context, HomeScreen.routeName); // Redirige a la HomeScreen si el usuario está autenticado
-    }
+
 
     return  Scaffold(
       body: SafeArea(child: 
@@ -48,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 InputText(controller: emailController, hintText: 'Email'),
                 InputText(controller: passController, hintText: 'Contraseña', obscureText: true,),
                 const SizedBox(height: 20,),
-                 PrimaryButton(text: "Ingresar", onTap: (){ trylogin(); },),
+                 PrimaryButton(text: "Ingresar", onTap: ()=>trylogin()),
                  SecondaryButton(text: "Registrarme", onTap: () {
                   Navigator.pushNamed(context,RegisterScreen.routeName);
                 },)
