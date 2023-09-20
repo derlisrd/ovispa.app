@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:ovispaapp/src/screens/common/loadingscreen.dart';
 import 'package:ovispaapp/src/screens/home/homescreen.dart';
 import 'package:provider/provider.dart';
 import 'package:ovispaapp/src/providers/authprovider.dart';
 import 'package:ovispaapp/src/screens/auth/register_screen.dart';
 import 'package:ovispaapp/src/widgets/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login';
@@ -16,7 +18,31 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passController = TextEditingController();
+<<<<<<< HEAD
   
+=======
+  bool _isLoading = true;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _checkAuthStatus();
+  }
+ 
+ Future<void> _checkAuthStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    
+    if(token!=null){
+      if (!context.mounted) return;
+        Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+    }
+    setState(() { _isLoading = false;});
+  }
+
+>>>>>>> 8f5107e33565a39b1b335e2c715f5001b5c3ff0c
   @override
   Widget build(BuildContext context) {
   final authProvider = Provider.of<AuthProvider>(context);
@@ -25,14 +51,24 @@ class _LoginScreenState extends State<LoginScreen> {
     await authProvider.login(emailController.text, passController.text);
       if (!context.mounted) return;
     if (authProvider.isAuth){
+<<<<<<< HEAD
        Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+=======
+      if (!context.mounted) return;
+        Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+>>>>>>> 8f5107e33565a39b1b335e2c715f5001b5c3ff0c
     }
     
   }
 
 
+  
 
-    return  Scaffold(
+
+
+    return _isLoading
+        ? const LoadingScreen() : 
+      Scaffold(
       body: SafeArea(child: 
         SingleChildScrollView(
           child: Center(

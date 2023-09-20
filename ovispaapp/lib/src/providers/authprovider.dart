@@ -6,13 +6,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class AuthProvider extends ChangeNotifier {
-  bool _isAuth = true;
+  bool _isAuth = false;
   User? _user;
 
   User? get user => _user;
   bool get isAuth => _isAuth;
 
-  final dio = Dio(BaseOptions(baseUrl: 'http://127.0.0.1:8000'));
+  final dio = Dio(BaseOptions(baseUrl: 'https://ovispa.saeta.app' ));
   
   Future<void> login(String email,String pass) async{
     try {
@@ -28,24 +28,30 @@ class AuthProvider extends ChangeNotifier {
         throw Exception('Credenciales incorrectas');
       }
     } catch (e) {
-      print(e);
+      throw Exception(e);
     }
   }
 
   Future<void> checkAuthStatus()async{
     final local = await SharedPreferences.getInstance();
     final token = local.getString('token');
+
     if(token != null){
-      _isAuth = true;
-      notifyListeners();
+      final response = await dio.post('/auth/check',options: Options(headers: {'Authorization': 'Bearer $token'}));
+      final data = response.data;
+      if(data['success'] == true && response.statusCode == 200){
+        _isAuth = true;
+        notifyListeners();
+      }
     }
   }
 
-  Future<void> logout() async{
+  Future<bool> logout() async{
     final SharedPreferences local = await SharedPreferences.getInstance();
     local.remove('token');
     _isAuth = false;
     notifyListeners();
+    return true;
   }
 
 
