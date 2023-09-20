@@ -21,7 +21,7 @@ class ApiKeyMiddleware
         if ( !$key || $key !== config('app.api_key')) {
             return response()->json([
                 'success'=>false,
-                'message'=>'There is not api key'
+                'message'=>'There is not x-api-key'
             ]);
         }
 
