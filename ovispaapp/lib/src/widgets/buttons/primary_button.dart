@@ -15,12 +15,12 @@ class PrimaryButton extends StatelessWidget {
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.black87,
-          padding: const EdgeInsets.symmetric(horizontal: 32,vertical: 22),
+          padding: const EdgeInsets.symmetric(horizontal: 24,vertical: 16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6)
           )
         ),
-        child:  MontseText(texto:text,style: const TextStyle(fontSize: 16,color: Colors.white),),
+        child:  MontseText(texto:text,style: const TextStyle(fontSize: 18,color: Colors.white),),
       ),
     );
   }

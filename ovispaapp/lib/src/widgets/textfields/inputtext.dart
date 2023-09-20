@@ -22,9 +22,9 @@ class InputText extends StatelessWidget {
     const primaryColor = Colors.grey;
 
     return Container(
-      decoration: const BoxDecoration(
+      decoration:  BoxDecoration(
         boxShadow: <BoxShadow>[
-          BoxShadow(color: Colors.black12,blurRadius: 20)
+          BoxShadow(color: Colors.grey.shade300,blurRadius: 18)
         ]
       ),
       padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -37,9 +37,9 @@ class InputText extends StatelessWidget {
           prefixIcon: icon,
           prefixIconColor: primaryColor,
           hintText: hintText,
-          hintStyle: TextStyle(color:Colors.grey[500],fontWeight: FontWeight.w400),
+          hintStyle: TextStyle(color:Colors.grey[500],fontWeight: FontWeight.w400, fontSize: 16),
           filled: true,
-          fillColor: Colors.grey.shade100,
+          fillColor: Colors.white,
           enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.white)),
           focusedBorder: const OutlineInputBorder(

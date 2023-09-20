@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ovispaapp/src/widgets/Fonts/montsetext.dart';
 
 class SecondaryButton extends StatelessWidget {
-
-  final Function()? onTap;
   final String text;
+  final Function()? onTap;
   const SecondaryButton({super.key, required this.text, this.onTap});
 
   @override
@@ -16,12 +15,12 @@ class SecondaryButton extends StatelessWidget {
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
-          padding: const EdgeInsets.symmetric(horizontal: 32,vertical: 22),
+          padding: const EdgeInsets.symmetric(horizontal: 24,vertical: 16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6)
           )
         ),
-        child:  MontseText(texto:text,style: const TextStyle(fontSize: 16,color: Colors.black87),),
+        child:  MontseText(texto:text,style: const TextStyle(fontSize: 18,color: Colors.black87),),
       ),
     );
   }
