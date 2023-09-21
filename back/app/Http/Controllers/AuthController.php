@@ -108,7 +108,7 @@ class AuthController extends Controller
         try {
             $newuser = User::create([
                 'email'=>$r->email,
-                'username'=>$r->username,
+                'username'=>$r->username ?? null,
                 'password'=>Hash::make($r->password),
                 'name'=>$r->name,
                 'active'=>1,
@@ -126,7 +126,7 @@ class AuthController extends Controller
             return response()->json([
                 'success'=>false,
                 'message'=>'Server Error',
-            ]);
+            ],500);
             Log::debug($th);
         }
     }
@@ -141,8 +141,8 @@ class AuthController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'success'=>false,
-                'message'=>'Server Error',
-            ]);
+                'message'=>'Server Error'
+            ],500);
             Log::debug($th);
         }
 
