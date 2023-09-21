@@ -123,9 +123,11 @@ class AuthController extends Controller
 
 
         } catch (\Throwable $th) {
+
             return response()->json([
                 'success'=>false,
                 'message'=>'Server Error',
+                'debu'=>$th
             ],500);
             Log::debug($th);
         }
