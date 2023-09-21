@@ -12,8 +12,20 @@ class AuthProvider extends ChangeNotifier {
   User? get user => _user;
   bool get isAuth => _isAuth;
 
-  final dio = Dio(BaseOptions(baseUrl: 'https://ovispa.saeta.app' ));
+  final dio = Dio(BaseOptions(baseUrl: 'https://ovispa.saeta.app',headers: {'x-api-key':'s9d1e5xx'}));
   
+
+  void setUser(String userParams){
+    _user = User.fromJson(userParams);
+    notifyListeners();
+  }
+
+  void setUserFromModel(User usermodel){
+    _user = usermodel;
+    notifyListeners();
+  }
+
+
   Future<void> login(String email,String pass) async{
     try {
       final response = await dio.post('/auth/login',data: {"email":email,"password":pass});

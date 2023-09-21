@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> trylogin(BuildContext context) async{
     await authProvider.login(emailController.text, passController.text);
-      if (!context.mounted) return;
+    if (!context.mounted) return;
     if (authProvider.isAuth){
        Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
     }
