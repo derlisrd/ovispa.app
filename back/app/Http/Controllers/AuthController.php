@@ -127,7 +127,7 @@ class AuthController extends Controller
             return response()->json([
                 'success'=>false,
                 'message'=>'Server Error',
-                'debu'=>$th
+                //'debu'=>$th
             ],500);
             Log::debug($th);
         }
