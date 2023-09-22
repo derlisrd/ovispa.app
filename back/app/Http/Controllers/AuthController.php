@@ -93,8 +93,8 @@ class AuthController extends Controller
     public function register(Request $r){
         $validator = Validator::make($r->all(), [
             'name' => 'required|string|max:255',
-            'username' => 'string|max:200|unique:users',
-            'email' => 'required|string|email|unique:email',
+            'username' => 'string|max:255|unique:users,username',
+            'email' => 'required|string|email|unique:users,email',
             'password' => 'required|string|min:8',
 
         ]);
@@ -123,11 +123,9 @@ class AuthController extends Controller
 
 
         } catch (\Throwable $th) {
-
             return response()->json([
                 'success'=>false,
                 'message'=>'Server Error',
-                'debu'=>$th
             ],500);
             Log::debug($th);
         }
@@ -143,7 +141,7 @@ class AuthController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'success'=>false,
-                'message'=>'Server Error'
+                'message'=>'Server Error',
             ],500);
             Log::debug($th);
         }
