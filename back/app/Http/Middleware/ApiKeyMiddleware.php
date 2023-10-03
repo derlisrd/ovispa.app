@@ -22,7 +22,7 @@ class ApiKeyMiddleware
             return response()->json([
                 'success'=>false,
                 'message'=>'There is not x-api-key'
-            ]);
+            ],401);
         }
 
         return $next($request);
