@@ -31,8 +31,7 @@ class AuthController extends Controller
         $remember = $r->remember ? true : false;
 
         $intento = filter_var($email, FILTER_VALIDATE_EMAIL) ?
-        ['email' => $email, 'password' => $password, 'active' => 1] :
-        ['username' => $email, 'password' => $password, 'active' => 1];
+        ['email' => $email, 'password' => $password, 'active' => 1] : ['username' => $email, 'password' => $password, 'active' => 1];
 
         if (Auth::attempt($intento,$remember)) {
             $user = User::where('email',$email)->orWhere('username',$email)->firstOrFail();
