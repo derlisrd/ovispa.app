@@ -24,7 +24,6 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('rol')->default(0);
             $table->boolean('active')->default(1);
             $table->rememberToken();
-            $table->softDeletes();
             $table->timestamps();
         });
     }
