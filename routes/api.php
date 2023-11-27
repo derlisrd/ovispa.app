@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MovimientoController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,7 +22,8 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/movimientos',[MovimientoController::class,'store'])->name('movimiento.store');
     Route::put('/movimientos/{id}',[MovimientoController::class,'update'])->name('movimiento.update');
     Route::delete('/movimientos/{id}',[MovimientoController::class,'destroy'])->name('movimiento.destroy');
-
+    
+    Route::get('/categorias',[CategoryController::class,'index']);
 
 });
 

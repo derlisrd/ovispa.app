@@ -38,7 +38,7 @@ class Handler extends ExceptionHandler
             return response()->json([
             'success'=>false,
             'message' => 'Unauthenticated.'
-            ],404);
+            ],401);
 
     });
     }

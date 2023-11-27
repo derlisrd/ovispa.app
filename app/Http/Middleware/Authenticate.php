@@ -18,7 +18,7 @@ class Authenticate extends Middleware
             return response()->json([
                 'success'=>false,
                 'message'=>'No autenticated'
-            ]);
+            ],401);
             //return route('login');
         }
     }
