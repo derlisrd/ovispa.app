@@ -25,7 +25,7 @@ class MovimientoController extends Controller
         $fechaFin = $request->input('fecha_fin', date('Y-m-t'));
 
         $mov = Movimiento::where('user_id', $userId)
-        ->whereBetween('created_at', [$fechaInicio, $fechaFin])
+        ->whereBetween('created_at', [$fechaInicio.' 00:00:00', $fechaFin.' 23:59:59'])
         ->get();
         return response()->json([
             'success'=>true,
